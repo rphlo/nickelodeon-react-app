@@ -1,38 +1,90 @@
-.App {
-  text-align: center;
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #000;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.bgVideo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  background-size: cover;
+  transition: 1s opacity;
+  object-fit: contain;
+  vertical-align: baseline;
+}
+.videoCover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  background: rgba(255, 255, 255, 0.6);
+}
+button {
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: transparent;
+  border-color: transparent;
+  font-size: 2em;
+  color: #000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.searchInput, .usernameInput, .passwordInput {
+  background-color: transparent;
+  color: #333;
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.5vw 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: calc(1em + 1vw);
+  border-bottom: 2px solid;
+  border-radius: 0;
+}
+.swal-overlay {
+  color: #000;
+  text-shadow: none;
+}
+.swal-button {
+  background-color:#000;
+  color:#fff;
+  border:none;
+  box-shadow:none;
+  border-radius:5px;
+  font-weight:600;
+  font-size:14px;
+  padding:10px 24px;
+  margin:0;
+  cursor:pointer
+ }
+ .swal-button:not([disabled]):hover {
+  background-color:#666
+}
+.swal-button:active {
+  background-color:#000
+}
+.swal-button:focus {
+  outline:none;
+  box-shadow: none
+}
+.swal-button[disabled] {
+  opacity:.5;
+  cursor:default
+}
+.swal-button::-moz-focus-inner {
+  border:0
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#dropTarget{
+  min-height: 300px;
+  border: 5px dashed #000;
+  padding: 0 15px;
 }
