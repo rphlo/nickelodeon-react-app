@@ -165,18 +165,18 @@ function App() {
     }
   }, [audioPlayer, queue])
 
-  const onPlay = (e) => {
+  const onPlay = async (e) => {
     try {
       e.preventDefault();
     } catch {};
-    audioPlayer.play()
+    await audioPlayer.play()
   }
 
-  const onPause = (e) => {
+  const onPause = async (e) => {
     try {
       e.preventDefault();
     } catch {};
-    audioPlayer.pause()
+    await audioPlayer.pause()
   }
 
   const onNext = async (e) => {
@@ -454,7 +454,7 @@ function App() {
       {username && (<>
         <ProgressBar audioPlayer={audioPlayer} currentTime={currentTime} duration={duration}></ProgressBar>
         <LogoutBtn apiRoot={options.apiRoot} authToken={options.authToken} onLoggedOut={onLoggedOut}/>
-        <Controls audioPlayer={audioPlayer} onPlay={onPlay} onNext={onNext} onDownload={onAudioDownload} onSearch={()=>setView(SEARCH)} onShowQueue={()=>setView(QUEUE)} onUpload={()=>setView(UPLOAD)}></Controls>
+        <Controls audioPlayer={audioPlayer} onPlay={onPlay} onPause={onPause} onNext={onNext} onDownload={onAudioDownload} onSearch={()=>setView(SEARCH)} onShowQueue={()=>setView(QUEUE)} onUpload={()=>setView(UPLOAD)}></Controls>
         { (view === PLAYER || true) && (
         <div style={{margin: "15px"}}>
           <i className="fa-brands fa-itunes-note"></i> <span className="audioTitle">{audioData?.filename?.split('/')?.pop()}</span><br />
