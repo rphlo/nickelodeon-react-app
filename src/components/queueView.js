@@ -68,7 +68,7 @@ function QueueView(props) {
               )}>
             <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)", display: "flex", justifyContent: "space-between", alignSelf: "center"}}>
                 <div style={{display: "flex", justifyContent: "start", alignSelf: "center"}}>
-                  <div style={{padding: "5px", whiteSpace: "nowrap"}}><i className="fa-solid fa-compact-disc fa-3x" onClick={()=>onUnQueue(idx)}></i><div style={{display: "inline-block", position: "relative",fontSize: "15px", color: "#fff", backgroundColor: "#09f", padding: "5px 10px", textAlign: "center", marginLeft: "-20px", borderRadius: "50%"}}>{idx + 1}</div></div>
+                  <div style={{padding: "5px", whiteSpace: "nowrap"}} onClick={()=>onUnQueue(idx)}><i className="fa-solid fa-compact-disc fa-3x"></i><div style={{display: "inline-block", position: "relative",fontSize: "15px", color: "#fff", backgroundColor: "#09f", padding: "5px 10px", textAlign: "center", marginLeft: "-20px", borderRadius: "50%"}}>{idx + 1}</div></div>
                   <div style={{paddingLeft: "5px"}}>
                     <a href="/" style={{fontSize: "1.2em", textDecoration: "none", fontWeight: "bold", color: "#03a"}} onClick={(e) => onSelectResult(e, r)}>{r.filename.split('/').pop()}</a><br/>
                     <span>/{r.filename}</span><br/>

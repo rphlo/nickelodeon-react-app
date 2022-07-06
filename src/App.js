@@ -461,7 +461,7 @@ function App() {
           <span className="audioFullTitle"><small>{audioData?.filename}</small></span>
         </div>)}
         { view === SEARCH && (
-          <SearchView apiRoot={options.apiRoot} onSelect={onSelectAudio} onCloseSearch={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onQueue={onQueue} queue={queue} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename}></SearchView>
+          <SearchView apiRoot={options.apiRoot} onSelect={onSelectAudio} onLoggedOut={onLoggedOut} onCloseSearch={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onQueue={onQueue} queue={queue} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename}></SearchView>
         )}
         { view === QUEUE && (
           <QueueView apiRoot={options.apiRoot} onSelect={onSelectAudio} onCloseQueue={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onShuffleQueue={onShuffleQueue} onUnQueue={onUnQueue} queue={queue} onDragQueueEnd={onDragQueueEnd} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename}></QueueView>
