@@ -41,7 +41,7 @@ function ProgressBar(props) {
     return (
         <div ref={progressBarDiv} style={{width: '100%', height: "40px"}} onClick={onClickProgressBar}>
             <span style={{position: "fixed", top: "10px", right: "5px", fontWeight: "bold"}}>{getProgressText()}</span>
-            <span style={{display: 'inline-block', position: "relative", top: "-5px", height: '10px', width: getProgressPerc() + '%', backgroundColor: 'black'}}></span>
+            <span style={{display: 'inline-block', position: "relative", top: "-6px", height: '10px', width: getProgressPerc() + '%', backgroundColor: 'black'}}></span>
         </div>
     );
 }
