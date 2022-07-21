@@ -1,4 +1,5 @@
 import react from 'react'
+import MediaSession from "@mebtte/react-media-session";
 
 import Controls from './components/controls'
 import ProgressBar from './components/progressBar'
@@ -74,15 +75,6 @@ function App() {
     }
     (async() => await fetchRandomSong())()
   }, [options.apiRoot, options.authToken])
-
-  react.useEffect(() => {
-    if ('mediaSession' in navigator && audioPlayer && audioData?.filename) {
-      navigator.mediaSession.metadata = new window.MediaMetadata({
-        title: audioData?.filename?.split('/')?.pop()
-      });
-      console.log("Track: " + audioData.filename)
-    }
-  }, [audioPlayer, audioData?.filename])
 
   react.useEffect(() => {
     localStorage.setItem('queue_v2', JSON.stringify(queue));
@@ -319,18 +311,6 @@ function App() {
     }
   };
 
-
-  react.useEffect(() => {
-    if ('mediaSession' in navigator && audioPlayer) {
-      navigator.mediaSession.setActionHandler('play', onPlay);
-      navigator.mediaSession.setActionHandler('pause', onPause);
-      navigator.mediaSession.setActionHandler('nexttrack', async () => (await onNext()));
-      navigator.mediaSession.setActionHandler('seekto', function({seekTime}) { audioPlayer.currentTime = seekTime; });
-      navigator.mediaSession.setActionHandler('seekbackward', function({seekOffset}) { audioPlayer.currentTime -= seekOffset; });
-      navigator.mediaSession.setActionHandler('seekforward', function({seekOffset}) { audioPlayer.currentTime += seekOffset; });
-    }
-  }, [audioPlayer])
-
   const onLoggedIn = async ({ username: _username, token, isSuperuser: _isSuperuser}) => {
     localStorage.setItem('auth_token', token)
     localStorage.setItem('username', _username)
@@ -356,6 +336,13 @@ function App() {
   const getAudioUrl = (data) => {
     if(data) {
       return data.download_url + '.mp3?auth_token=' + options.authToken
+    }
+    return null
+  }
+
+  const getArtworkUrl = (data) => {
+    if(data) {
+      return data.download_url + '.jpg?auth_token=' + options.authToken
     }
     return null
   }
@@ -469,9 +456,26 @@ function App() {
         { view === UPLOAD && (
           <UploadForm apiRoot={options.apiRoot} authToken={options.authToken} enqueueSnackbar={enqueueSnackbar} onClose={()=>setView(PLAYER)} downloadYoutubeSong={downloadYoutubeSong} downloadSpotifySong={downloadSpotifySong}></UploadForm>
         )}
-        <audio ref={audioEl} preload="none" tabIndex="0">
-          <source src={getAudioUrl(audioData)}></source>
-        </audio>
+        <MediaSession
+          title={audioData?.filename?.split('/')?.pop()}
+          album={'humppakone.com'}
+          onPlay={onPlay}
+          onPause={onPause}
+          onSeekBackward={() => {audioPlayer.currentTime -= 10}}
+          onSeekForward={() => {audioPlayer.currentTime += 10}}
+          onNextTrack={onNext}
+          artwork={[
+            {
+              src: getArtworkUrl(audioData),
+              size: '256x256',
+              type: 'image/jpeg',
+            },
+          ]}
+        >
+          <audio ref={audioEl} preload="none" tabIndex="0">
+            <source src={getAudioUrl(audioData)}></source>
+          </audio>
+        </MediaSession>
       </>)}
       {!username && <>
         <LoginForm apiRoot={options.apiRoot} onLoggedIn={onLoggedIn}></LoginForm>
