@@ -464,13 +464,6 @@ function App() {
           onSeekBackward={() => {audioPlayer.currentTime -= 10}}
           onSeekForward={() => {audioPlayer.currentTime += 10}}
           onNextTrack={onNext}
-          artwork={[
-            {
-              src: getArtworkUrl(audioData),
-              size: '256x256',
-              type: 'image/jpeg',
-            },
-          ]}
         >
           <audio ref={audioEl} preload="none" tabIndex="0">
             <source src={getAudioUrl(audioData)}></source>
