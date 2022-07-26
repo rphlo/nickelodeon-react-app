@@ -13,6 +13,7 @@ import { useSnackbar } from 'notistack';
 import swal from "sweetalert";
 
 import './App.css'
+import React from 'react';
 
 
 const pkg = require('../package.json');
@@ -339,13 +340,6 @@ function App() {
     }
     return null
   }
-
-  const getArtworkUrl = (data) => {
-    if(data) {
-      return data.download_url + '.jpg?auth_token=' + options.authToken
-    }
-    return null
-  }
   
   const onAudioDownload = (e) => {
       e.preventDefault();
@@ -457,18 +451,24 @@ function App() {
           <UploadForm apiRoot={options.apiRoot} authToken={options.authToken} enqueueSnackbar={enqueueSnackbar} onClose={()=>setView(PLAYER)} downloadYoutubeSong={downloadYoutubeSong} downloadSpotifySong={downloadSpotifySong}></UploadForm>
         )}
         <MediaSession
-          title={audioData?.filename?.split('/')?.pop()}
-          album={'humppakone.com'}
+          title={audioData?.filename}
+          album="humppakone.com"
+          artist="humppakone.com"
           onPlay={onPlay}
           onPause={onPause}
-          onSeekBackward={() => {audioPlayer.currentTime -= 10}}
-          onSeekForward={() => {audioPlayer.currentTime += 10}}
+          //onSeekBackward={() => {audioPlayer.currentTime -= 10}}
+          //onSeekForward={() => {audioPlayer.currentTime += 10}}
           onNextTrack={onNext}
-        >
-          <audio ref={audioEl} preload="none" tabIndex="0">
-            <source src={getAudioUrl(audioData)}></source>
-          </audio>
-        </MediaSession>
+          artwork={[
+            {
+              src: audioData?.download_url + '.jpg?auth_token=' + options?.authToken,
+              size: "512x512"
+            },
+          ]}
+        />
+        <audio ref={audioEl} preload="none" tabIndex="0">
+          <source src={getAudioUrl(audioData)}></source>
+        </audio>
       </>)}
       {!username && <>
         <LoginForm apiRoot={options.apiRoot} onLoggedIn={onLoggedIn}></LoginForm>

@@ -10,7 +10,7 @@ function LogoutBtn(props) {
               Authorization: 'Token ' + props.authToken,
             },
           })
-          if(resp.status === 204) {
+          if(resp.status === 204 || resp.status === 401) {
             props.onLoggedOut()
           }
         })()
