@@ -1,6 +1,7 @@
 import react from 'react'
 import swal from 'sweetalert'
-import ReactResumableJs from 'react-resumable-js'
+import ReactResumableJs from './resumable'
+
 function UploadForm(props) {
     const urlInput = react.useRef()
     const onSubmit = async (e) => {
