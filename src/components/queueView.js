@@ -46,7 +46,7 @@ function QueueView(props) {
     props.editAudioFilename(song);
   }};
 
-    return (
+  return (
       <div style={{margin: "15px"}}>
         <div>
         <button onClick={props.onShuffleQueue}><i className="fa-solid fa-shuffle"></i></button>

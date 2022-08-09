@@ -1,5 +1,5 @@
 import react from 'react'
-import MediaSession from "@mebtte/react-media-session";
+import MediaSession from "./components/mediaSessionWrapper";
 
 import Controls from './components/controls'
 import ProgressBar from './components/progressBar'
