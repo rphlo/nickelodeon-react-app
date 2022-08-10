@@ -49,7 +49,7 @@ function UploadForm(props) {
         <div style={{margin: "15px"}}>
         <div>
             <form onSubmit={onSubmit}>
-                <i className="fa-brands fa-youtube fa-fw fa-2x"></i><i className="fa-brands fa-spotify fa-fw fa-2x"></i><input autoFocus placeholder="Spotify or Youtube URL" ref={urlInput} type="text" className="searchInput"></input> <button type="submit"><i className="fa-solid fa-cloud-arrow-up"></i></button> <button type="submit"> <i className="fa-solid fa-times" onClick={props.onClose}></i></button>
+                <i className="fa-brands fa-youtube fa-fw fa-2x"></i><i className="fa-brands fa-spotify fa-fw fa-2x"></i><input autoFocus placeholder="Spotify or Youtube URL" ref={urlInput} type="text" className="searchInput"></input> <button><i className="fa-solid fa-paste" onClick={async (e) => {e.preventDefault();urlInput.current.value = await navigator.clipboard.readText()}}></i></button> <button type="submit"><i className="fa-solid fa-cloud-arrow-up"></i></button> <button onClick={props.onClose}><i className="fa-solid fa-times" ></i></button>
             </form>
         </div>
         <ReactResumableJs
