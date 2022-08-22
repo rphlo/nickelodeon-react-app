@@ -1,6 +1,5 @@
 import react from 'react'
 import MediaSession from "./components/mediaSessionWrapper";
-
 import Controls from './components/controls'
 import ProgressBar from './components/progressBar'
 import LogoutBtn from './components/logoutBtn'
@@ -39,7 +38,13 @@ function App() {
   const [duration, setDuration] = react.useState(0)
   const [queue, setQueue] = react.useState([])
   const [firstLoadDone, setFirstLoadDone] = react.useState(false)
+  const [useAAC, setUseAAC] = react.useState(false)
   
+
+  const toggleAAC = function() {
+    setUseAAC(!useAAC);
+  }
+
   const audioEl = react.useCallback((node) => {
     setAudioPlayer(node);
   }, []);
@@ -336,7 +341,7 @@ function App() {
 
   const getAudioUrl = (data) => {
     if(data) {
-      return data.download_url + '.mp3?auth_token=' + options.authToken
+      return data.download_url + '.' + (useAAC ? 'aac' : 'mp3') +'?auth_token=' + options.authToken
     }
     return null
   }
@@ -435,7 +440,7 @@ function App() {
       {username && (<>
         <ProgressBar audioPlayer={audioPlayer} currentTime={currentTime} duration={duration}></ProgressBar>
         <LogoutBtn apiRoot={options.apiRoot} authToken={options.authToken} onLoggedOut={onLoggedOut}/>
-        <Controls audioPlayer={audioPlayer} onPlay={onPlay} onPause={onPause} onNext={onNext} onDownload={onAudioDownload} onSearch={()=>setView(SEARCH)} onShowQueue={()=>setView(QUEUE)} onUpload={()=>setView(UPLOAD)}></Controls>
+        <Controls audioPlayer={audioPlayer} onPlay={onPlay} onPause={onPause} onNext={onNext} onDownload={onAudioDownload} onSearch={()=>setView(SEARCH)} onShowQueue={()=>setView(QUEUE)} onUpload={()=>setView(UPLOAD)} toggleAAC={toggleAAC} useAAC={useAAC}></Controls>
         { (view === PLAYER || true) && (
         <div style={{margin: "15px"}}>
           <i className="fa-brands fa-itunes-note"></i> <span className="audioTitle">{audioData?.filename?.split('/')?.pop()}</span><br />
