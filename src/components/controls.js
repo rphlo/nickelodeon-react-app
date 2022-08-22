@@ -9,7 +9,7 @@ function Controls(props) {
         &nbsp;<button onClick={props.onSearch}><i className="fa-solid fa-magnifying-glass"></i></button>
         &nbsp;<button onClick={props.onShowQueue}><i className="fa-solid fa-list"></i></button>
         &nbsp;<button onClick={props.onUpload}><i className="fa-solid fa-cloud-arrow-up"></i></button>
-        &nbsp;<button onClick={props.toggleAAC} style={{fontSize: "0.5em"}}><span style={{fontSize: !props.useAAC ? "1.5em" : "1em"}}>MP3</span><span>|</span><span style={{fontSize: props.useAAC ? "1.5em" : "1em"}}>AAC</span></button>
+        &nbsp;<button onClick={props.toggleAAC} style={{fontSize: "0.7em"}}><span style={{fontSize: !props.useAAC ? "1.5em" : "1em"}}>MP3</span><span>|</span><span style={{fontSize: props.useAAC ? "1.5em" : "1em"}}>AAC</span></button>
         </div>
     );
 }
