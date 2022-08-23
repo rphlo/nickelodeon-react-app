@@ -18,5 +18,6 @@ jobs:
         node-version: 16.x
         cache: 'npm'
     - run: npm install -g yarn surge
-    - run: yarn install
-    - run: yarn deploy
+    - run: yarn install --production=true
+    - run: yarn run build
+    - run: "mv ./build/index.html ./build/200.html && cp CNAME ./build/ && surge ./build --token ${{ secrets.SURGE_TOKEN }}"
