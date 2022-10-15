@@ -100,7 +100,7 @@ function SearchView(props) {
           <button type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>&nbsp;
           <button onClick={props.onCloseSearch}><i className="fa-solid fa-times"></i></button>
         </form>
-        <div style={{marginTop: "15px"}}>
+        <div style={{margin: "15px -15px -15px -15px"}} id="searchResults">
         {result && result.map((r)=> (
             <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)", display: "flex", justifyContent: "space-between", alignSelf: "center"}}>
                 <div style={{display: "flex", justifyContent: "start", alignSelf: "center"}}>

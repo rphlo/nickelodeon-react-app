@@ -14,6 +14,14 @@ import swal from "sweetalert";
 import './App.css'
 import React from 'react';
 
+const appHeight = () => {
+  const doc = document.documentElement;
+  doc.style.setProperty("--app-height", `${window.innerHeight}px`);
+  const searchResultDiv = document.getElementById('searchResults');
+  doc.style.setProperty("--app-header-height", searchResultDiv ? `${searchResultDiv.offsetTop}px` : '0px');
+};
+
+window.addEventListener("resize", appHeight);
 
 const pkg = require('../package.json');
 
