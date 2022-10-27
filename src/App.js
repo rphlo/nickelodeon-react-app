@@ -63,6 +63,7 @@ function App() {
   const { enqueueSnackbar } = useSnackbar();
 
   react.useEffect(() => {
+    appHeight()
     const t = localStorage.getItem('current_v2');
     const q = localStorage.getItem('queue_v2');
     try {
