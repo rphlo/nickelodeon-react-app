@@ -79,6 +79,10 @@ function App() {
   }, []);
 
   react.useEffect(() => {
+    appHeight()
+  }, [view]);
+
+  react.useEffect(() => {
     if(!options.authToken) {
       setUsername(null)
       return
