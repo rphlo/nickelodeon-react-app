@@ -21,6 +21,7 @@ function SearchView(props) {
         )
         if(resp.status === 200) {
             const data = await resp.json()
+            document.getElementById("searchResults").scrollTop = 0
             setResult(data)
         } else if(resp.status === 401) {
           await props.onLoggedOut()
