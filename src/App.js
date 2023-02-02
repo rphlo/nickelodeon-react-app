@@ -405,8 +405,7 @@ function App() {
           delete downloads[t];
           setDl({...downloads})
         }
-      }).catch((e) => {
-        console.log(e)
+      }).catch(() => {
         enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'})
         delete downloads[t];
         setDl({...downloads})
