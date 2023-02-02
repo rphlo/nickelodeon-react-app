@@ -384,6 +384,7 @@ function App() {
       fetch(apiRoot + '/tasks/' + t,
       {
         method: 'GET',
+        credentials: 'omit',
         headers: {
           Authorization: 'Token ' + authToken,
           Accept: "application/json"
