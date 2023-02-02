@@ -1,3 +1,3 @@
-# React Nickelodeon 2022
+# Nickelodeon React App
 
-2022 rewrite of the frontend for the music streaming backend "Django Nickelodeon"
+2022 rewrite of the frontend for the music streaming backend "nickelodeon-backend"
