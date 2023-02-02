@@ -391,7 +391,7 @@ function App() {
         const response = await result.json();
         if(!response.pk) {
           if (response.error) {
-            enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'});
+            enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'});
             delete downloads[t];
             setDl({...downloads})
           } else {
@@ -407,7 +407,7 @@ function App() {
         }
       }).catch((e) => {
         console.log(e)
-        enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'})
+        enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'})
         delete downloads[t];
         setDl({...downloads})
       });
