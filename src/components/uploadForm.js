@@ -86,6 +86,13 @@ function UploadForm(props) {
             }}
             showFileList={false}
           />
+        {(Object.keys(props.downloads).length > 0) && (<div>
+            <h3>Downloads in progress</h3>
+            {Object.values(props.downloads).map((val) => (<p key={val.taskId}>
+                <i className={"fa-brands fa-" + val.client.toLowerCase() + " fa-fw"}></i> { val.songName }
+            </p>))
+            }
+        </div>)}
         </div>
     );
 }

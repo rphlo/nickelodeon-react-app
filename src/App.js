@@ -47,9 +47,9 @@ function App() {
   const [queue, setQueue] = react.useState([])
   const [firstLoadDone, setFirstLoadDone] = react.useState(false)
   const [useAAC, setUseAAC] = react.useState(false)
-  const [downloads, setDownloads] = react.useState({})
+  const [dl, setDl] = react.useState({})
   
-
+  const downloads = {}
   const toggleAAC = function() {
     setUseAAC(!useAAC);
   }
@@ -375,10 +375,8 @@ function App() {
   const onStartDownload = (videoId, taskId, client='Youtube') => {
     enqueueSnackbar(client + ' download "' + videoId + '" started...');
     
-    const list = {...downloads};
-    list[videoId] = { taskId, done: false};
-    setDownloads(list);
-
+    downloads[taskId] = { taskId, videoId, songName: client + " " + videoId, done: false, client };
+    setDl({...downloads})
     function fetchStatus (v, t, c) {
       const { apiRoot, authToken } = options;
       fetch(apiRoot + '/tasks/' + t + '/',
@@ -394,14 +392,25 @@ function App() {
         if(!response.pk) {
           if (response.error) {
             enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'});
+            delete downloads[t];
+            setDl({...downloads})
           } else {
-            setTimeout(((a, b, c) => (() => fetchStatus(a, b, c)))(v, t, c), 1000);
+            setTimeout(((a, b, cc) => (() => fetchStatus(a, b, cc)))(v, t, c), 1000);
+            downloads[t].songName = response?.song_name || c + " " + v;
+            setDl({...downloads})
           }
         } else {
           const name = response.filename.split('/').pop();
           enqueueSnackbar('Song "' + name + '" ready', {variant: 'success'});
+          delete downloads[t];
+          setDl({...downloads})
         }
-      }).catch(() => enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'}));
+      }).catch((e) => {
+        console.log(e)
+        enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'})
+        delete downloads[t];
+        setDl({...downloads})
+      });
     }
     
     setTimeout(() => fetchStatus(videoId, taskId, client), 1000);
@@ -471,7 +480,7 @@ function App() {
           <QueueView apiRoot={options.apiRoot} onSelect={onSelectAudio} onCloseQueue={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onShuffleQueue={onShuffleQueue} onUnQueue={onUnQueue} queue={queue} onDragQueueEnd={onDragQueueEnd} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename}></QueueView>
         )}
         { view === UPLOAD && (
-          <UploadForm apiRoot={options.apiRoot} authToken={options.authToken} enqueueSnackbar={enqueueSnackbar} onClose={()=>setView(PLAYER)} downloadYoutubeSong={downloadYoutubeSong} downloadSpotifySong={downloadSpotifySong}></UploadForm>
+          <UploadForm apiRoot={options.apiRoot} authToken={options.authToken} downloads={dl} enqueueSnackbar={enqueueSnackbar} onClose={()=>setView(PLAYER)} downloadYoutubeSong={downloadYoutubeSong} downloadSpotifySong={downloadSpotifySong}></UploadForm>
         )}
         <MediaSession
           title={audioData?.filename}
