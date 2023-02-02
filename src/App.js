@@ -47,6 +47,7 @@ function App() {
   const [queue, setQueue] = react.useState([])
   const [firstLoadDone, setFirstLoadDone] = react.useState(false)
   const [useAAC, setUseAAC] = react.useState(false)
+  const [downloads, setDownloads] = react.useState({})
   
 
   const toggleAAC = function() {
@@ -373,33 +374,34 @@ function App() {
   };
   const onStartDownload = (videoId, taskId, client='Youtube') => {
     enqueueSnackbar(client + ' download "' + videoId + '" started...');
-    // TODO: Update progress of download
-    /*
-    const list = this.state.youtubeDL;
+    
+    const list = {...downloads};
     list[videoId] = { taskId, done: false};
-    this.setState({youtubeDL: list});
+    setDownloads(list);
 
-    (function fetchStatus (t) {
-      $.ajax({
-        url: t.state.params.apiRoot + '/tasks/' + taskId,
-        type: 'GET',
+    (function fetchStatus (v, t, c) {
+      const { apiRoot, authToken } = options;
+      fetch(apiRoot + '/tasks/' + t,
+      {
+        method: 'GET',
         headers: {
-          Authorization: 'Token ' + t.state.params.authToken
+          Authorization: 'Token ' + authToken,
+          Accept: "application/json"
         }
-      }).done(response => {
+      }).then(async function(result){
+        const response = await result.json();
         if(!response.pk) {
           if (response.error) {
-            t.props.snackbarMessage((spotify ? 'Spotify track' : 'Youtube video') + ' "' + videoId + '" download failed', {variant: 'error'});
+            enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'});
           } else {
-            setTimeout(((tt) => (() => fetchStatus(tt)))(t), 1000);
+            setTimeout(((a, b, c) => (() => fetchStatus(a, b, c)))(v, t, c), 1000);
           }
         } else {
           const name = response.filename.split('/').pop();
-          t.props.snackbarMessage('Song "' + name + '" ready', {variant: 'success'});
+          enqueueSnackbar('Song "' + name + '" ready', {variant: 'success'});
         }
-      });
-    })(this);
-    */
+      }).catch(() => enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'}));
+    })(videoId, taskId, client);
   }
 
   const downloadYoutubeSong = async (videoId) => {
