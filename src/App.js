@@ -379,17 +379,17 @@ function App() {
     list[videoId] = { taskId, done: false};
     setDownloads(list);
 
-    (function fetchStatus (v, t, c) {
+    function fetchStatus (v, t, c) {
       const { apiRoot, authToken } = options;
-      fetch(apiRoot + '/tasks/' + t,
+      fetch(apiRoot + '/tasks/' + t + '/',
       {
         method: 'GET',
         credentials: 'omit',
         headers: {
-          Authorization: 'Token ' + authToken,
-          Accept: "application/json"
-        }
-      }).then(async function(result){
+            'Content-Type': 'application/json',
+            Authorization: 'Token ' + authToken,
+        },
+    }).then(async function(result){
         const response = await result.json();
         if(!response.pk) {
           if (response.error) {
@@ -402,7 +402,9 @@ function App() {
           enqueueSnackbar('Song "' + name + '" ready', {variant: 'success'});
         }
       }).catch(() => enqueueSnackbar((c === 'Youtube' ? 'Youtube video' : 'Spotify track') + ' "' + v + '" download failed', {variant: 'error'}));
-    })(videoId, taskId, client);
+    }
+    
+    setTimeout(() => fetchStatus(videoId, taskId, client), 1000);
   }
 
   const downloadYoutubeSong = async (videoId) => {
