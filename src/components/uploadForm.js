@@ -67,7 +67,10 @@ function UploadForm(props) {
             onFileAdded={(file, resumable) => {
               resumable.upload();
               // TODO: Track upload progress
-              props.enqueueSnackbar("MP3 upload started!");
+              props.enqueueSnackbar(file.file.name + " upload started!");
+            }}
+            onFileSuccess={(file, server) => {
+                props.enqueueSnackbar(file.file.name + " upload success!", {variant: "success"});
             }}
             startButton={false}
             pauseButton={false}
@@ -84,7 +87,7 @@ function UploadForm(props) {
             onResumeUpload={() => {
                 this.inputDisable = true;
             }}
-            showFileList={false}
+            showFileList={true}
           />
         {(Object.keys(props.downloads).length > 0) && (<div>
             <h3>Downloads in progress</h3>
