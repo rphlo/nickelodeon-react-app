@@ -78,7 +78,7 @@ export default class ReactResumableJs extends React.Component {
             }
  
             let currentFileList = this.state.fileList.files;
-            const index = currentFileList.findIndex((el) => el.file.uniqueIdentifier === file.uniqueIdentifier);
+            const index = currentFileList.findIndex((el) => !!el && el.file.uniqueIdentifier === file.uniqueIdentifier);
             if (index >= 0) {
               delete currentFileList[index];
             }
@@ -88,7 +88,6 @@ export default class ReactResumableJs extends React.Component {
                 messageStatus: this.props.completedMessage + file.fileName || fileServer
             }, () => {
                 if (typeof this.props.onFileSuccess === "function") {
-                    console.log(file)
                     this.props.onFileSuccess(file, fileServer);
                 }
             });

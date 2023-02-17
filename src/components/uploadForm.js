@@ -70,7 +70,7 @@ function UploadForm(props) {
               props.enqueueSnackbar(file.file.name + " upload started!");
             }}
             onFileSuccess={(file, server) => {
-                props.enqueueSnackbar(file.file.name + " upload success!", {variant: "success"});
+              props.enqueueSnackbar(file.file.name + " upload success!", {variant: "success"});
             }}
             startButton={false}
             pauseButton={false}
