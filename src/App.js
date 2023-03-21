@@ -77,6 +77,30 @@ function App() {
         setAudioData(JSON.parse(t));
       }
     } catch {}
+    (async() => {
+      try {
+        const resp = await fetch(`${options.apiRoot}/`, {
+          method: 'GET',
+          credentials: 'omit',
+          headers: {
+            Authorization: 'Token ' + options.authToken,
+            'Content-Type': 'application/json'
+          }
+        })
+        if (resp.status !== 200) {
+          throw new Error('Something wrong')
+        }
+        const data = await resp.json()
+        if (data.status !== "logged in") {
+          throw Error();
+        }
+        setUsername(data.username);
+        setIsSuperuser(data.is_superuser);
+      } catch(e) {
+        await onLoggedOut()
+      }
+    })()
+    
   }, []);
 
   react.useEffect(() => {
