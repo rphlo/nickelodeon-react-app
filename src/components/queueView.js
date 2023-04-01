@@ -66,8 +66,8 @@ function QueueView(props) {
                 snapshot.isDragging,
                 provided.draggableProps.style
               )}>
-            <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)", display: "flex", justifyContent: "flex-start"}}>
-                <div style={{display: "flex", justifyContent: "start", alignSelf: "center"}}>
+            <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)"}}>
+                <div style={{display: "flex", display: "flex", justifyContent: "flex-start"}}>
                   <div style={{padding: "5px", whiteSpace: "nowrap", minWidth: "55px"}} onClick={()=>onUnQueue(idx)}>
                     <i className="fa-solid fa-compact-disc fa-3x"></i><div style={{display: "inline-block", position: "relative",fontSize: "15px", color: "#fff", backgroundColor: "#09f", padding: "5px 10px", textAlign: "center", marginLeft: "-20px", borderRadius: "50%"}}>{idx + 1}</div></div>
                   <div style={{paddingLeft: "5px", wordBreak:"break-all", flexShrink: 1, minWidth: "1%", maxWidth: "calc(100% - 108px)"}}>
