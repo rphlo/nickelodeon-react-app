@@ -76,17 +76,17 @@ function QueueView(props) {
                     <span><i className="fa-solid fa-user"></i> {r.owner}</span>
                   </div>
                   <div style={{flexGrow: "1"}}></div>
-                  <div style={{alignSelf: "center", verticalAlign:"center", fontSize:"0.7em"}}>
+                  <div style={{alignSelf: "center", verticalAlign:"top", fontSize:"0.55em"}}>
                     {(props.currentUsername === r.owner || props.isSuperuser ) && (
-                    <><button onClick={onEditAudioFilename(r)}>
+                    <><button onClick={onEditAudioFilename(r)} style={{lineHeight: "13px"}}>
                       <i className="fa-solid fa-edit"></i>
                     </button><br/></>
                     )}
-                    <button onClick={onAudioDownload(r)}>
+                    <button onClick={onAudioDownload(r)} style={{lineHeight: "17px"}}>
                       <i className="fa-solid fa-download"></i>
                     </button><br/>
                     {(props.currentUsername === r.owner || props.isSuperuser) && (
-                    <button onClick={onAudioDelete(r)}>
+                    <button onClick={onAudioDelete(r)} style={{lineHeight: "13px"}}>
                       <i className="fa-solid fa-trash"></i>
                     </button>)}
                   </div>
