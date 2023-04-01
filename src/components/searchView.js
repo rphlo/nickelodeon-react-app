@@ -103,29 +103,34 @@ function SearchView(props) {
         </form>
         <div style={{margin: "15px -15px -15px -15px"}} id="searchResults">
         {result && result.map((r)=> (
-            <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)", display: "flex", justifyContent: "space-between", alignSelf: "center"}}>
-                <div style={{display: "flex", justifyContent: "start", alignSelf: "center"}}>
-                  <div style={{padding: "5px"}} onClick={()=>onQueue(r)}><i className="fa-solid fa-compact-disc fa-3x"></i>{trackQueueOrder(r) && <div style={{display: "inline-block", position: "relative",fontSize: "15px", color: "#fff", backgroundColor: "#09f", padding: "5px 10px", textAlign: "center", marginLeft: "-20px", borderRadius: "50%"}}>{trackQueueOrder(r)}</div>}</div>
-                  <div style={{paddingLeft: "5px"}}>
+            <div key={r.id} style={{borderBottom: "1px solid rgb(0,0,0,0.1)"}}>
+                <div style={{display: "flex", justifyContent: "flex-start"}}>
+                  <div style={{padding: "5px", whiteSpace: "nowrap", minWidth: "55px"}} onClick={()=>onQueue(r)}>
+                    <i className="fa-solid fa-compact-disc fa-3x"></i>
+                    {
+                      trackQueueOrder(r) &&
+                        <div style={{display: "inline-block", position: "relative",fontSize: "15px", color: "#fff", backgroundColor: "#09f", padding: "5px 10px", textAlign: "center", marginLeft: "-20px", borderRadius: "50%"}}>{trackQueueOrder(r)}</div>
+                    }</div>
+                  <div style={{paddingLeft: "5px", wordBreak:"break-all", flexShrink: 1, minWidth: "1%", maxWidth: "calc(100% - 108px)"}}>
                     <a href="/" style={{fontSize: "1.2em", textDecoration: "none", fontWeight: "bold", color: "#03a"}} onClick={(e) => onSelectResult(e, r)}>{r.filename.split('/').pop()}</a><br/>
                     <span>/{r.filename}</span><br/>
                     <span><i className="fa-solid fa-user"></i> {r.owner}</span>
                   </div>
-                </div>
-                
-                <div style={{alignSelf: "center", verticalAlign:"center"}}>
-                  {(props.currentUsername === r.owner || props.isSuperuser ) && (
-                  <><button onClick={onEditAudioFilename(r)}>
-                    <i className="fa-solid fa-edit"></i>
-                  </button> </>
-                  )}
-                  <button onClick={onAudioDownload(r)}>
-                    <i className="fa-solid fa-download"></i>
-                  </button>
-                  {(props.currentUsername === r.owner || props.isSuperuser) && (
-                  <> <button onClick={onAudioDelete(r)}>
-                    <i className="fa-solid fa-trash"></i>
-                  </button></>)}
+                  <div style={{flexGrow: "1"}}></div>
+                  <div style={{alignSelf: "center", verticalAlign:"top", fontSize:"0.7em"}}>
+                    {(props.currentUsername === r.owner || props.isSuperuser ) && (
+                    <><button onClick={onEditAudioFilename(r)}>
+                      <i className="fa-solid fa-edit"></i>
+                    </button><br/></>
+                    )}
+                    <button onClick={onAudioDownload(r)}>
+                      <i className="fa-solid fa-download"></i>
+                    </button><br/>
+                    {(props.currentUsername === r.owner || props.isSuperuser) && (
+                    <button onClick={onAudioDelete(r)}>
+                      <i className="fa-solid fa-trash"></i>
+                    </button>)}
+                  </div>
                 </div>
             </div>
         ))}
