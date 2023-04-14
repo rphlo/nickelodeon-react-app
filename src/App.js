@@ -48,8 +48,8 @@ function App() {
   const [firstLoadDone, setFirstLoadDone] = react.useState(false)
   const [useAAC, setUseAAC] = react.useState(false)
   const [dl, setDl] = react.useState({})
-  
-  const downloads = {}
+  const dlRef = react.useRef(dl);
+  dlRef.current = dl;
   const toggleAAC = function() {
     setUseAAC(!useAAC);
   }
@@ -396,46 +396,55 @@ function App() {
         link.click()
       }
   };
-  const onStartDownload = (videoId, taskId, client='Youtube') => {
-    enqueueSnackbar(client + ' download "' + videoId + '" started...');
-    
-    downloads[taskId] = { taskId, videoId, songName: client + " " + videoId, done: false, client };
-    setDl({...downloads})
-    function fetchStatus (v, t, c) {
-      const { apiRoot, authToken } = options;
-      fetch(apiRoot + '/tasks/' + t + '/',
-      {
-        method: 'GET',
-        credentials: 'omit',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Token ' + authToken,
-        },
+
+  function fetchStatus (v, t, c) {
+    const { apiRoot, authToken } = options;
+    fetch(apiRoot + '/tasks/' + t + '/',
+    {
+      method: 'GET',
+      credentials: 'omit',
+      headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Token ' + authToken,
+      },
     }).then(async function(result){
-        const response = await result.json();
-        if(!response.pk) {
-          if (response.error) {
-            enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'});
-            delete downloads[t];
-            setDl({...downloads})
-          } else {
-            setTimeout(((a, b, cc) => (() => fetchStatus(a, b, cc)))(v, t, c), 1000);
-            downloads[t].songName = response?.song_name || c + " " + v;
-            setDl({...downloads})
-          }
-        } else {
-          const name = response.filename.split('/').pop();
-          enqueueSnackbar('Song "' + name + '" ready', {variant: 'success'});
+      return await result.json();
+    }).then(async function(response){
+      if(!response.pk) {
+        if (response.error) {
+          const downloads = {...dlRef.current};
+          enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'});
           delete downloads[t];
-          setDl({...downloads})
+          setDl({...downloads});
+        } else {
+          const downloads = {...dlRef.current};
+          setTimeout(((a, b, cc) => (() => fetchStatus(a, b, cc)))(v, t, c), 1000);
+          downloads[t].songName = response?.song_name || c + " " + v;
+          setDl({...downloads});
         }
-      }).catch(() => {
+      } else {
+        const name = response.filename.split('/').pop();
+        enqueueSnackbar('Song "' + name + '" ready', {variant: 'success'});
+        const downloads = {...dlRef.current};
+        delete downloads[t];
+        setDl({...downloads});
+      }
+    }).catch((e) => {
+      console.log("error", e);
+      const downloads = {...dlRef.current};
+      if (downloads[t]) {
         enqueueSnackbar(downloads[t].songName + ' download failed', {variant: 'error'})
         delete downloads[t];
-        setDl({...downloads})
-      });
-    }
-    
+        setDl({...downloads});
+      }
+    });
+  }
+
+  const onStartDownload = (videoId, taskId, client='Youtube') => {
+    enqueueSnackbar(client + ' download "' + videoId + '" started...');
+    const downloads = {...dlRef.current};
+    downloads[taskId] = { taskId, videoId, songName: client + " " + videoId, done: false, client };
+    setDl({...downloads});
     setTimeout(() => fetchStatus(videoId, taskId, client), 1000);
   }
 
