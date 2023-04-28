@@ -99,3 +99,12 @@ button {
   max-height: calc(var(--app-height) - var(--app-header-height));
   overflow-y: auto;
 }
+
+input::file-selector-button {
+    font-weight: bold;
+    color: black;
+    padding: 5px 15px;
+    background: transparent;
+    border: 2px solid #000;
+    margin-right: 10px;
+}
