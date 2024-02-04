@@ -43,7 +43,7 @@ function SearchView(props) {
 
   const getAudioUrl = (data) => {
     if(data) {
-      return data.download_url + '.mp3?auth_token=' + props.authToken
+      return data.download_url + '.' + (props.useAAC ? 'aac' : 'mp3') + '?auth_token=' + props.authToken
     }
     return null
   }
@@ -51,7 +51,7 @@ function SearchView(props) {
   const onAudioDownload = (audioData) => {return (e) => {
       e.preventDefault();
       const url = getAudioUrl(audioData)
-      const name = audioData.filename?.split('/')?.pop() + '.mp3'
+      const name = audioData.filename?.split('/')?.pop() + '.' + (props.useAAC ? 'aac' : 'mp3')
       if (name && url) {
         const link = document.createElement('a')
         link.setAttribute("download", name)

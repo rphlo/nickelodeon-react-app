@@ -16,7 +16,6 @@
     "react-dom": "^16.0.0",
     "react-scripts": "4.0.3",
     "resumablejs": "^1.1.0",
-    "surge": "^0.23.1",
     "sweetalert": "^2.1.2",
     "web-vitals": "^1.0.1"
   },
@@ -26,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn run build",
-    "deploy": "mv ./build/index.html ./build/200.html && cp CNAME ./build/ && yarn surge ./build"
+    "deploy": "cd ./build/ && scp -r ./ rphlo@humppakone.com:/apps/humppakone/"
   },
   "eslintConfig": {
     "extends": [
