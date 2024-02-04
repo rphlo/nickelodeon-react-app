@@ -506,10 +506,10 @@ function App() {
           <span className="audioFullTitle"><small>{audioData?.filename}</small></span>
         </div>)}
         { view === SEARCH && (
-          <SearchView apiRoot={options.apiRoot} onSelect={onSelectAudio} onLoggedOut={onLoggedOut} onCloseSearch={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onQueue={onQueue} queue={queue} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename} useAAC></SearchView>
+          <SearchView apiRoot={options.apiRoot} onSelect={onSelectAudio} onLoggedOut={onLoggedOut} onCloseSearch={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onQueue={onQueue} queue={queue} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename} useAAC={useAAC}></SearchView>
         )}
         { view === QUEUE && (
-          <QueueView apiRoot={options.apiRoot} onSelect={onSelectAudio} onCloseQueue={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onShuffleQueue={onShuffleQueue} onUnQueue={onUnQueue} queue={queue} onDragQueueEnd={onDragQueueEnd} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename} useAAC></QueueView>
+          <QueueView apiRoot={options.apiRoot} onSelect={onSelectAudio} onCloseQueue={()=>setView(PLAYER)} currentUsername={username} authToken={options.authToken} isSuperuser={isSuperuser} onShuffleQueue={onShuffleQueue} onUnQueue={onUnQueue} queue={queue} onDragQueueEnd={onDragQueueEnd} deleteAudio={deleteAudio} editAudioFilename={editAudioFilename} useAAC={useAAC}></QueueView>
         )}
         { view === UPLOAD && (
           <UploadForm apiRoot={options.apiRoot} authToken={options.authToken} downloads={dl} enqueueSnackbar={enqueueSnackbar} onClose={()=>setView(PLAYER)} downloadYoutubeSong={downloadYoutubeSong} downloadSpotifySong={downloadSpotifySong}></UploadForm>
